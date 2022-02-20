@@ -128,6 +128,23 @@ int main(void)
 		  }
 	  }
 
+	  fres = f_open(&w25qxxx_fp, "0:/DEMO.TXT", FA_OPEN_EXISTING|FA_READ|FA_WRITE);
+	  if(fres == FR_OK)
+	  {
+		  printf("open 0:/DEMO.TXT file ok...\r\n");
+
+		  uint8_t buff[50];
+		  UINT br[1];
+		  fres = f_lseek(&w25qxxx_fp, 0);
+		  fres = f_read(&w25qxxx_fp, buff, 10, br);
+		  (fres == FR_OK)? printf("read 0:/DEMO.TXT file ok...\r\n"): printf("read 0:/DEMO.TXT file error...\r\n");
+
+
+	  }
+	  else {
+		printf("open 0:/DEMO.TXT file error...\r\n");
+	}
+
   }
   else
 	  printf("  spi flash w25qxxx mount ok...\r\n");
