@@ -133,13 +133,20 @@ int main(void)
 	  {
 		  printf("open 0:/DEMO.TXT file ok...\r\n");
 
-		  uint8_t buff[50];
+		  uint8_t buff[200];
 		  UINT br[1];
 		  fres = f_lseek(&w25qxxx_fp, 0);
-		  fres = f_read(&w25qxxx_fp, buff, 10, br);
+		  fres = f_read(&w25qxxx_fp, buff, f_size(&w25qxxx_fp), br);
 		  (fres == FR_OK)? printf("read 0:/DEMO.TXT file ok...\r\n"): printf("read 0:/DEMO.TXT file error...\r\n");
 
-
+		  fres = f_lseek(&w25qxxx_fp, f_size(&w25qxxx_fp));
+		  fres = f_write(&w25qxxx_fp, "add info", 9, br);
+		  if (fres == FR_OK)
+		  {
+			  fres = f_close(&w25qxxx_fp);
+			  if (fres == FR_OK)
+				  printf("write data ok...\r\n");
+		  }
 	  }
 	  else {
 		printf("open 0:/DEMO.TXT file error...\r\n");
